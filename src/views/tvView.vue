@@ -4,6 +4,3 @@
 <template>
     <headerComponent />
 </template>
-<style scoped>
-
-</style>
