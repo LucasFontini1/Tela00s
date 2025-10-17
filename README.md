@@ -6,7 +6,7 @@
 
 ###
 
-<p align="center">Lucas Fontini da Luz<br>x</p>
+<p align="center">Lucas Fontini da Luz<br>Maria Carolina da Silveira</p>
 
 ###
 
