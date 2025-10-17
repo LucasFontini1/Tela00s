@@ -28,3 +28,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+plugins
+axios.js
+src/plugins/axios.js
