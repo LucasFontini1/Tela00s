@@ -13,7 +13,6 @@ export const useTvStore = defineStore("tv", () => {
             "discover/tv?language=pt-BR&sort_by=popularity.desc&first_air_date.gte=2000-01-01&first_air_date.lte=2009-12-31"
         );
         state.tv = response.data.results;
-        console.log(state.tv);  
     }
     return {
         tv,
