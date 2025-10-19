@@ -1,11 +1,15 @@
 <script setup>
-    import { onMounted } from 'vue';
+    import { onMounted, ref } from 'vue';
     import { useTvStore } from '@/stores/tv';
+    import Loading from 'vue-loading-overlay';
 
     const tvStore = useTvStore();
+    const isLoading = ref(false)
 
     onMounted(async () => {
+        isLoading.value = true;
         await tvStore.fetchTv2000s();
+        isLoading.value = false;
     });
 </script>
 <template>
@@ -22,6 +26,7 @@
             </li>
         </ul>
     </section>
+    <loading v-model:active="isLoading" is-full-page />
 </template>
 <style scoped>
 .melhoresSeries {
