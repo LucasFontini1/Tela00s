@@ -1,6 +1,7 @@
 import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import 'vue-loading-overlay/dist/css/index.css';
 
 import App from './App.vue'
 import router from './router'
