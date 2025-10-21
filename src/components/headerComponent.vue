@@ -1,10 +1,16 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const route = useRoute()
 
 const currentPath = computed(() => route.path)
+
+const menu = ref(false)
+
+function toggleMenu() {
+    menu.value = !menu.value
+}
 </script>
 <template>
     <header>
@@ -25,9 +31,28 @@ const currentPath = computed(() => route.path)
                 <li>
                     <span class="mdi mdi-magnify"></span>
                 </li>
+                <li>
+                    <span class="mdi mdi-menu" @click="toggleMenu()"></span>
+                </li>
             </ul>
         </nav>
     </header>
+    <div class="menuOpened" v-if="menu">
+        <ul>
+            <li>
+                <span class="mdi mdi-heart"></span><span class="none">Curtidos</span>
+            </li>
+            <li>
+                <span class="mdi mdi-star"></span><span class="none">Favoritos</span>
+            </li>
+            <li>
+                <span class="mdi mdi-cog"></span><span class="none">Configurações</span>
+            </li>
+            <h1 @click="toggleMenu()">
+                X
+            </h1>
+        </ul>
+    </div>
 </template>
 <style scoped>
 nav {
@@ -72,7 +97,7 @@ nav ul.pages li a {
 }
 
 header nav ul.pages li a.paginaAtual {
-    background-color: #0F3363;   
+    background-color: #0F3363;
     border-radius: 4px;
 }
 
@@ -80,5 +105,43 @@ ul.icons li span {
     font-size: 2rem;
     color: #1B5EB8;
 }
-
+.menuOpened {
+    position: absolute;
+    right: 2rem;
+    top: 5rem;
+    background-color: #1B5EB8;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 1rem;
+}
+.menuOpened:hover ul li span.none {
+    display: inline;
+    transition: 1s ease-in;
+}
+.none{
+    display: none;
+}
+.menuOpened ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.menuOpened ul li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.menuOpened ul li span {
+    font-size: 1.5rem;
+}
+.menuOpened ul li:hover {
+    background-color: #0F3363;
+    border-radius: 4px;
+    transition: 0.3s ease-in;
+}
 </style>
