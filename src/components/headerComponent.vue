@@ -37,7 +37,7 @@ function toggleMenu() {
             </ul>
         </nav>
     </header>
-    <div class="menuOpened" v-if="menu">
+    <div class="menuOpened" :class="{ aparecer: menu}">
         <ul>
             <li>
                 <span class="mdi mdi-heart"></span><span class="none">Curtidos</span>
@@ -48,9 +48,10 @@ function toggleMenu() {
             <li>
                 <span class="mdi mdi-cog"></span><span class="none">Configurações</span>
             </li>
-            <h1 @click="toggleMenu()">
-                X
-            </h1>
+            <li  @click="toggleMenu()">
+                <span class="mdi mdi-close-circle-outline"></span><span class="none">Fechar</span>
+            </li>
+            
         </ul>
     </div>
 </template>
@@ -107,7 +108,7 @@ ul.icons li span {
 }
 .menuOpened {
     position: absolute;
-    right: 2rem;
+    right: 0rem;
     top: 5rem;
     background-color: #1B5EB8;
     color: white;
@@ -116,6 +117,13 @@ ul.icons li span {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     padding: 1rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+.aparecer {
+    right: 2rem;
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
 }
 .menuOpened:hover ul li span.none {
     display: inline;
