@@ -126,11 +126,14 @@ ul.icons li span {
     transition: transform 0.3s ease-in-out;
 }
 .menuOpened:hover ul li span.none {
-    display: inline;
-    transition: 1s ease-in;
+        font-size: 1.3rem;
+    transition: 0.1s ease-in;
 }
-.none{
-    display: none;
+.menuOpened:hover ul li{
+    gap: 1rem;
+}
+.menuOpened ul li span.none{
+    font-size: 0px;
 }
 .menuOpened ul {
     list-style: none;
@@ -142,7 +145,6 @@ ul.icons li span {
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 1rem;
 }
 .menuOpened ul li span {
     font-size: 1.5rem;
