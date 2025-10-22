@@ -14,4 +14,10 @@ body {
     Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+@font-face {
+  font-family: 'logoFont';
+  src: url('/src/assets/fonts/PLANK___.TTF') format('truetype');
 }

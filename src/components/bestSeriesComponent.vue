@@ -1,21 +1,41 @@
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref, onBeforeUnmount } from 'vue';
     import { useTvStore } from '@/stores/tv';
     import Loading from 'vue-loading-overlay';
 
     const tvStore = useTvStore();
-    const isLoading = ref(false)
+    const isLoading = ref(false);
+
+    const seriesRef = ref(null);
+
+    const handleWheel = (e) => {
+        if (seriesRef.value) {
+            e.preventDefault();
+            seriesRef.value.scrollLeft += e.deltaY;
+        }
+    };
 
     onMounted(async () => {
         isLoading.value = true;
         await tvStore.fetchTv2000s();
         isLoading.value = false;
+
+        if (seriesRef.value) {
+            seriesRef.value.addEventListener('wheel', handleWheel, { passive: false });
+        }
+    });
+
+    onBeforeUnmount(() => {
+        if (seriesRef.value) {
+            seriesRef.value.removeEventListener('wheel', handleWheel);
+        }
     });
 </script>
+
 <template>
     <section class="melhoresSeries">
         <h2>Séries mais bem avaliadas</h2>
-        <ul class="series">
+        <ul class="series" ref="seriesRef">
             <li v-for="tv in tvStore.tv" :key="tv.id">
                 <img :src="`https://image.tmdb.org/t/p/w500${tv.poster_path}`" :alt="tv.name" />
                 <h3>{{ tv.name }}</h3>
@@ -28,6 +48,7 @@
     </section>
     <loading v-model:active="isLoading" is-full-page />
 </template>
+
 <style scoped>
 .melhoresSeries {
     padding: 2rem;
@@ -72,20 +93,23 @@
     margin-bottom: 0.5rem;
 }
 
+/* Customização da barra de rolagem */
 .series::-webkit-scrollbar {
-    height: 0.5rem;
-    background-color: #1B5EB8; 
+    height: 0.7rem;
+    background-color: #f1f1f1;
 }
 
 .series::-webkit-scrollbar-track {
-    background: #1B5EB8;
+    background: #f1f1f1;
     border-radius: 14px;
 }
 
 .series::-webkit-scrollbar-thumb {
     background: #0F3363;
     border-radius: 4px;
-    padding: 1rem;
 }
 
+.series::-webkit-scrollbar-thumb:hover {
+    background: #1B5EB8;
+}
 </style>
