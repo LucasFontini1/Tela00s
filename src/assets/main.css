@@ -16,6 +16,10 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
+a{
+  color: black;
+  text-decoration: none;
+}
 
 @font-face {
   font-family: 'logoFont';
