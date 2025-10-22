@@ -52,7 +52,6 @@
 <style scoped>
 .melhoresSeries {
     padding: 2rem;
-    background-color: #f5f5f5;
 }
 .melhoresSeries h2 {
     margin-bottom: 1.5rem;

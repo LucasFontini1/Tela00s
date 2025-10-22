@@ -13,7 +13,7 @@ function toggleMenu() {
 }
 </script>
 <template>
-    <header>
+    <header id="header">
         <nav>
             <h1>
                 <RouterLink to="/"><img src="/public/logo.png" alt="LOGO"></RouterLink>
@@ -23,7 +23,7 @@ function toggleMenu() {
                     <RouterLink to="/" :class="{ paginaAtual: currentPath === '/' }">INICIO</RouterLink>
                 </li>
                 <li>
-                    <RouterLink to="/series" :class="{ paginaAtual: currentPath === '/series' }">SERIES</RouterLink>
+                    <RouterLink to="/series" :class="{ paginaAtual: currentPath === '/series' }">SÉRIES</RouterLink>
                 </li>
 
             </ul>
