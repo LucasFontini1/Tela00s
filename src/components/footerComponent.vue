@@ -41,7 +41,7 @@ nav{
     padding: 2rem;
     background-color: #1B5EB8;
     color: white;
-    margin-top: 2rem;
+    margin-top: 6rem;
 }
 a{
     color: white;
