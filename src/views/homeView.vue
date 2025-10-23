@@ -3,10 +3,12 @@
     import searchComponent from '@/components/searchComponent.vue';
     import bestSeriesComponent from '@/components/bestSeriesComponent.vue';
     import footerComponent from '@/components/footerComponent.vue';
+    import welcomeComponent from '@/components/welcomeComponent.vue';
 </script>
 <template>
     <headerComponent />
     <searchComponent />
+    <welcomeComponent />
     <bestSeriesComponent />
     <footerComponent />
 </template>

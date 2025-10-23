@@ -34,7 +34,7 @@
 
 <template>
     <section class="melhoresSeries">
-        <h2>Séries mais bem avaliadas</h2>
+        <h2>Séries mais procuradas</h2>
         <ul class="series" ref="seriesRef">
             <li v-for="tv in tvStore.tv" :key="tv.id">
                 <img :src="`https://image.tmdb.org/t/p/w500${tv.poster_path}`" :alt="tv.name" />
@@ -51,7 +51,7 @@
 
 <style scoped>
 .melhoresSeries {
-    padding: 2rem;
+    padding: 6rem 2rem 2rem 2rem;
 }
 .melhoresSeries h2 {
     margin-bottom: 1.5rem;
@@ -90,6 +90,8 @@
     text-overflow: ellipsis;
     text-align: center;
     margin-bottom: 0.5rem;
+    font-family: 'Krona One', sans-serif;
+    font-weight: normal;
 }
 
 /* Customização da barra de rolagem */
