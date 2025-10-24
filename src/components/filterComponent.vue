@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useGenreStore } from '@/stores/genres'
 
-const
+const genreStore = useGenreStore()
 
 const isOpen = ref(false)
 const openYears = ref(false)
@@ -12,6 +12,10 @@ const openGenres = ref(false)
 
 function toggleFilter() {
   isOpen.value = !isOpen.value
+  if (!isOpen.value) {
+    openYears.value = false
+    openGenres.value = false
+  }
 }
 function toggleYears() {
   openYears.value = !openYears.value
@@ -19,6 +23,11 @@ function toggleYears() {
 function toggleGenres() {
   openGenres.value = !openGenres.value
 }
+onMounted(() => {
+  genreStore.fetchGenres('tv');
+});
+
+
 </script>
 
 <template>
@@ -30,18 +39,18 @@ function toggleGenres() {
 
     <transition name="fade-slide">
       <div v-if="isOpen" class="year-genres">
-        <button @click="toggleYears()" class="year">ANOS</button>
+        <button v-if="!openGenres" @click="toggleYears()" class="year">ANOS</button>
         <button @click="toggleGenres()" class="genres">GÊNEROS</button>
       </div>
     </transition>
-        <div class="genres" v-if="openGenres">
-            <p>Gêneros</p>
-            <ul>
-                <li>
-                    {{  }}
-                </li>
-            </ul>
-        </div>
+    <div class="genresList" v-if="openGenres">
+      <ul>
+        <li v-for="genres in genreStore.genres" :key="genres.id">
+          <input type="checkbox" :id="`genre-${genres.id}`" />
+          <label :for="`genre-${genres.id}`">{{ genres.name }}</label>
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -49,7 +58,7 @@ function toggleGenres() {
 .filter {
   padding: 20px;
   background-color: #1b5eb8;
-  width: 20%;
+  width: 40%;
   margin: 0 auto;
   text-align: center;
   color: white;
@@ -69,6 +78,7 @@ function toggleGenres() {
   min-width: 200px;
   padding: 10px;
 }
+
 .alwais-open:hover {
   background-color: #0f3363;
   border-radius: 5px;
@@ -85,6 +95,7 @@ function toggleGenres() {
   gap: 20px;
   margin-top: 20px;
 }
+
 .year,
 .genres {
   border: none;
@@ -96,10 +107,53 @@ function toggleGenres() {
   background-color: #1b5eb8;
   color: white;
 }
+
 .year:hover,
 .genres:hover {
   background-color: #0f3363;
   transition: background-color 0.3s ease;
+}
+
+.genresList {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.genresList ul {
+  list-style: none;
+  padding: 0;
+  overflow-wrap: break-word;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.genresList li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #0f3363;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.genresList li label {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.genresList input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border: #fff 2px solid;
+  background-color: #1b5eb8;
 }
 
 /* Transição */
@@ -107,6 +161,7 @@ function toggleGenres() {
 .fade-slide-leave-active {
   transition: all 0.4s ease;
 }
+
 .fade-slide-enter-from,
 .fade-slide-leave-to {
   opacity: 0;
