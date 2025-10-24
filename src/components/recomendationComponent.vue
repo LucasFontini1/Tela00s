@@ -42,6 +42,9 @@ onMounted(async () => {
     <div class="info">
       <h2>{{ serie.name }}</h2>
       <p>{{ serie.overview }}</p>
+      <button>
+        Ver mais
+      </button>
     </div>
   </section>
 
@@ -51,12 +54,11 @@ onMounted(async () => {
 <style scoped>
 .recomendation {
   width: 100%;
-  height: 400px;
+  height: 80vh;
   display: flex;
   align-items: end;
   color: white;
   padding: 2rem;
-  border-radius: 20px;
   position: relative;
   overflow: hidden;
 }
@@ -64,14 +66,40 @@ onMounted(async () => {
 .info {
   z-index: 2;
   position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 auto;
+  width: 60%;
+}
+.info h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: 'Krona One', sans-serif;
+}
+.info p {
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.info button {
+  width: 30%;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #1B5EB8;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 auto;
+}
+.info button:hover {
+  background-color: #0F3363;
 }
 
-.recomendation::after {
-  /* leve camada de sombra extra, tipo Netflix */
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.9));
-  border-radius: 20px;
-}
 </style>
