@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useGenreStore } from '@/stores/genres'
+import { useTvStore } from '@/stores/tv'
 
 const genreStore = useGenreStore()
+const tvStore = useTvStore()
 
 const isOpen = ref(false)
 const openYears = ref(false)
@@ -19,9 +21,11 @@ function toggleFilter() {
 }
 function toggleYears() {
   openYears.value = !openYears.value
+  openGenres.value = false
 }
 function toggleGenres() {
   openGenres.value = !openGenres.value
+  openYears.value = false
 }
 onMounted(() => {
   genreStore.fetchGenres('tv');
@@ -46,10 +50,12 @@ onMounted(() => {
     <div class="genresList" v-if="openGenres">
       <ul>
         <li v-for="genres in genreStore.genres" :key="genres.id">
-          <input type="checkbox" :id="`genre-${genres.id}`" />
+          <input type="checkbox" :id="`genre-${genres.id}`" :checked="genreStore.genresSelected.includes(genres.id)" @change="genreStore.toggleGenreSelection(genres.id)" />
           <label :for="`genre-${genres.id}`">{{ genres.name }}</label>
         </li>
       </ul>
+      <button @click="tvStore.fetchTvWithGenres()">Filtrar</button>
+      <button @click="toggleGenres()">Fechar</button>
     </div>
   </section>
 </template>
@@ -140,6 +146,7 @@ onMounted(() => {
   padding: 5px;
   border-radius: 5px;
   text-align: center;
+  cursor: pointer;
 }
 
 .genresList li label {
@@ -167,4 +174,29 @@ onMounted(() => {
   opacity: 0;
   transform: translateY(-15px);
 }
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1b5eb8;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Krona One', sans-serif;
+}
+button:hover {
+  background-color: #0f3363;
+  transition: background-color 0.3s ease;
+}
+label {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 </style>
