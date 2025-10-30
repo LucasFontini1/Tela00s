@@ -69,9 +69,13 @@
     min-width: 200px;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.3);
     padding: 1rem;
     text-align: center;
+}
+.series li:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
 }
 .series li img {
     width: 100%;

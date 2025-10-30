@@ -2,9 +2,11 @@
     import headerComponent from '../components/headerComponent.vue';
     import footerComponent from '@/components/footerComponent.vue';
     import recomendationComponent from '@/components/recomendationComponent.vue';
+    import filterComponent from '@/components/filterComponent.vue';
 </script>
 <template>
     <headerComponent />
     <recomendationComponent />
+    <filterComponent />
     <footerComponent />
 </template>
