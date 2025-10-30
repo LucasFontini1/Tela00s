@@ -16,7 +16,7 @@ function toggleMenu() {
     <header id="header">
         <nav>
             <h1>
-                <RouterLink to="/"><img src="/public/logo.png" alt="LOGO"></RouterLink>
+                <RouterLink to="/"><img src="/public/logo-sem-fundo.png" alt="LOGO"></RouterLink>
             </h1>
             <ul class="pages">
                 <li>
@@ -61,6 +61,11 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+}
+
+nav h1 {
+    width: 10%;
+    cursor: pointer;
 }
 
 nav h1 img {

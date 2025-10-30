@@ -1,6 +1,6 @@
 <template>
     <section class="welcome">
-        <img src="/logo.png" alt="">
+        <img src="/logo-sem-fundo.png" alt="">
         <h2>
             Melhor serviço para conhecer series dos anos 2000
         </h2>
@@ -18,8 +18,8 @@
     margin: 0 15rem;
 }
 .welcome img {
-    width: 15rem;
-    margin-bottom: 2rem;
+    width: 40%;
+    margin-bottom: -8rem;
 }
 .welcome h2 {
     font-family: 'Krona One', sans-serif;
