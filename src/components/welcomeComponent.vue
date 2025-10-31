@@ -25,4 +25,5 @@
     font-family: 'Krona One', sans-serif;
     font-size: 1.5rem;
 }
+
 </style>
