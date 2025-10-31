@@ -114,7 +114,7 @@ ul.icons li span {
 .menuOpened {
     position: absolute;
     right: 0rem;
-    top: 5rem;
+    top: 10rem;
     background-color: #1B5EB8;
     color: white;
     border: 1px solid #ccc;
