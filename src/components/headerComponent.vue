@@ -56,12 +56,20 @@ function toggleMenu() {
     </div>
 </template>
 <style scoped>
-nav {
+header{
+    width: 100%;
     display: flex;
     justify-content: center;
+}
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 0rem 2rem;
-    gap: 30%;
+    margin: 0;
+    padding: 0;
+    padding-right: 2rem;
 }
 
 nav h1 {
