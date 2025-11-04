@@ -10,8 +10,6 @@ const isOpen = ref(false)
 const openYears = ref(false)
 const openGenres = ref(false)
 
-
-
 function toggleFilter() {
   isOpen.value = !isOpen.value
   if (!isOpen.value) {
@@ -30,12 +28,10 @@ function toggleGenres() {
 onMounted(() => {
   genreStore.fetchGenres('tv');
 });
-
-
 </script>
 
 <template>
-  <section class="filter">
+  <section class="filter" :class="{ open: isOpen }">
     <div class="alwais-open" @click="toggleFilter">
       <span class="mdi menu" :class="isOpen ? 'mdi-menu-close' : 'mdi-menu'"></span>
       <h2>Filtrar</h2>
@@ -44,9 +40,10 @@ onMounted(() => {
     <transition name="fade-slide">
       <div v-if="isOpen" class="year-genres">
         <button v-if="!openGenres" @click="toggleYears()" class="year">ANOS</button>
-        <button @click="toggleGenres()" class="genres">GÊNEROS</button>
+        <button @click="toggleGenres()" class="genres" :class="{ wide: isOpen }">GÊNEROS</button>
       </div>
     </transition>
+
     <div class="genresList" v-if="openGenres">
       <ul>
         <li v-for="genres in genreStore.genres" :key="genres.id">
@@ -62,15 +59,19 @@ onMounted(() => {
 
 <style scoped>
 .filter {
-  padding: 20px;
   background-color: #1b5eb8;
-  width: 40%;
-  margin: 0 auto;
+  margin-left: 7rem;
   text-align: center;
   color: white;
-  min-width: 450px;
   margin-top: 4rem;
   border-radius: 10px;
+  width: 10%;
+  transition: width 0.5s ease;
+  overflow: hidden;
+}
+
+.filter.open {
+  width: 40%;
 }
 
 .alwais-open {
@@ -80,15 +81,16 @@ onMounted(() => {
   cursor: pointer;
   justify-content: center;
   margin: 0 auto;
-  width: 30%;
-  min-width: 200px;
-  padding: 10px;
+  width: 100%;
 }
 
 .alwais-open:hover {
   background-color: #0f3363;
-  border-radius: 5px;
+  border-radius: 10px;
   transition: background-color 0.3s ease;
+}
+.filter.open .alwais-open {
+  width: 30%;
 }
 
 .menu {
@@ -112,12 +114,16 @@ onMounted(() => {
   font-family: 'Krona One', sans-serif;
   background-color: #1b5eb8;
   color: white;
+  transition: width 0.3s ease;
 }
 
 .year:hover,
 .genres:hover {
   background-color: #0f3363;
-  transition: background-color 0.3s ease;
+}
+
+.genres.wide {
+  width: 30%;
 }
 
 .genresList {
@@ -156,14 +162,15 @@ onMounted(() => {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .genresList input[type="checkbox"] {
   width: 16px;
   height: 16px;
   border: #fff 2px solid;
   background-color: #1b5eb8;
+  cursor: pointer;
 }
 
-/* Transição */
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: all 0.4s ease;
@@ -176,7 +183,7 @@ onMounted(() => {
 }
 
 button {
-  margin-top: 10px;
+  margin: 10px 0;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -186,17 +193,15 @@ button {
   font-size: 1rem;
   font-family: 'Krona One', sans-serif;
 }
+
 button:hover {
   background-color: #0f3363;
   transition: background-color 0.3s ease;
 }
+
 label {
   width: 100%;
   text-align: left;
   cursor: pointer;
 }
-input[type="checkbox"] {
-  cursor: pointer;
-}
-
 </style>
