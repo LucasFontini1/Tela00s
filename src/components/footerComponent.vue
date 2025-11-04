@@ -1,95 +1,52 @@
-<script setup>
-    import { RouterLink } from 'vue-router';
-</script>
 <template>
     <footer>
         <nav>
-            <div class="dev">
-                <h3>Desenvolvido por:</h3>
-                <p>Lucas Fontini Luz</p>
-                <p>Maria Carolina Silveira</p>
-            </div>
+            <p class="image"><a href="#header"><img src="/logo-sem-fundo.png" alt=""></a></p>
+            <ul class="temos">
+                <li>Series</li>
+                <li>Atores</li>
+                <li>Trailers</li>
+            </ul>
             <ul class="social">
-                <li class="instagram">
-                    <span class="mdi mdi-instagram"></span>
-                </li>
-                <li class="github">
-                    <a href="https://github.com/LucasFontini1/Tela00s.git" target="_blank">
-                        <span class="mdi mdi-github"></span>
-                    </a>
-                </li>
+                <li><span class="mdi mdi-github"></span></li>
+                <li><span class="mdi mdi-instagram"></span></li>
             </ul>
-            <ul class="pages">
-                <li class="voltar">
-                    <a href="#header">Voltar Ao topo</a>
-                </li>
-                <li class="home">
-                    <RouterLink to="/">Início</RouterLink>
-                </li>
-                <li class="series">
-                    <RouterLink to="/series">Séries</RouterLink>
-                </li>
-            </ul>
+            <p>Alguns direitos reservados &copy; 2025</p>
         </nav>
     </footer>
 </template>
 <style scoped>
-nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-    background-color: #1B5EB8;
-    color: white;
-    margin-top: 6rem;
-}
-a{
-    color: white;
-}
-.dev h3{
-    margin-bottom: 0.5rem;
-}
-.dev{
-    width: 25%;
-}
-.social{
-    display: flex;
-    gap: 1rem;
-    list-style: none;
-    justify-content: center;
-    width: 50%;
-}
-.social li{
-    font-size: 2.5rem;
-    cursor: pointer;
-}
-.social li.instagram:hover{
-    color: #E1306C;
-    transition: 0.3s ease-in;
-}
-.social li.github:hover a{
-    color: #333;
-    transition: 0.3s ease-in;
-}
-ul.pages li{
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-}
-ul.pages{
-    width: 25%;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
-}
-ul.pages li{
-    padding: 0.5rem 1rem;
-}
-ul.pages li:hover{
-    background-color: #0F3363;
-    transition: 0.3s ease-in;
-    border-radius: 10px;
-}
-
+    nav{
+        background-color: #6699D4;
+        color: white;
+        padding: 1rem 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    p{
+        text-align: center;
+    }
+    ul{
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        gap: 3rem;
+        list-style: none;
+    }
+    ul.social{
+        list-style: none;
+        font-size: 2rem;
+        gap: 1.5rem;
+    }
+    img{
+        margin: 0;
+        margin: 0 auto;
+        width: 120px;
+    }
+    p:last-child{
+        font-size: 0.7rem;
+    }
 </style>
