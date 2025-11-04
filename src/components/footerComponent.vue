@@ -24,6 +24,7 @@
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+        margin-top: 2rem;
     }
     p{
         text-align: center;

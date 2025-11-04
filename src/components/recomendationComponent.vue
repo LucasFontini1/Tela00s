@@ -76,7 +76,7 @@ onMounted(async () => {
 .info h2 {
   font-size: 2.5rem;
   font-weight: bold;
-  font-family: 'Krona One', sans-serif;
+  font-family: 'Turret Road', sans-serif;
 }
 .info p {
   line-height: 1.5;
@@ -85,13 +85,14 @@ onMounted(async () => {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: 'Actor', sans-serif;
 }
 .info button {
   width: 30%;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 5px;
-  background-color: #1B5EB8;
+  background-color: #6699D4;
   color: white;
   font-size: 1rem;
   cursor: pointer;
@@ -99,7 +100,7 @@ onMounted(async () => {
   margin: 0 auto;
 }
 .info button:hover {
-  background-color: #0F3363;
+  background-color: #4673A9;
 }
 
 </style>

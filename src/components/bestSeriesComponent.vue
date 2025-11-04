@@ -59,6 +59,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+
 .series{
     mask-image: linear-gradient(to right, 
         transparent 0%,
