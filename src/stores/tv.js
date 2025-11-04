@@ -10,12 +10,14 @@ export const useTvStore = defineStore('tv', () => {
     tvWithGenres: [],
     currentPage: 1,
     totalPages: 0,
+    tvDetails: [],
   })
 
-  const tv = computed(() => state.tv)
-  const tvWithGenres = computed(() => state.tvWithGenres)
-  const totalPages = computed(() => state.totalPages)
-  const currentPage = computed(() => state.currentPage)
+  const tv = computed(() => state.tv);
+  const tvWithGenres = computed(() => state.tvWithGenres);
+  const totalPages = computed(() => state.totalPages);
+  const currentPage = computed(() => state.currentPage);
+  const tvDetails = computed(() => state.tvDetails);
 
   const fetchTv2000s = async () => {
     const response = await api.get(
@@ -33,6 +35,12 @@ export const useTvStore = defineStore('tv', () => {
     state.totalPages = response.data.total_pages
   }
 
+  const getTvDetails = async(id) => {
+        const response = await api.get(`tv/${id}?language=pt-BR`);
+        state.tvDetails = response.data;
+  }
+
+
   return {
     tv,
     fetchTv2000s,
@@ -40,5 +48,7 @@ export const useTvStore = defineStore('tv', () => {
     fetchTvWithGenres,
     totalPages,
     currentPage,
+    getTvDetails,
+    tvDetails,
   }
 })
