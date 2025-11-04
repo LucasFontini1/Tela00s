@@ -59,7 +59,7 @@ onMounted(() => {
 
 <style scoped>
 .filter {
-  background-color: #1b5eb8;
+  background-color: #6699D4;
   margin-left: 7rem;
   text-align: center;
   color: white;
@@ -85,12 +85,13 @@ onMounted(() => {
 }
 
 .alwais-open:hover {
-  background-color: #0f3363;
+  background-color: #4673A9;
   border-radius: 10px;
   transition: background-color 0.3s ease;
 }
 .filter.open .alwais-open {
   width: 30%;
+  margin-top: 5px;
 }
 
 .menu {
@@ -112,14 +113,14 @@ onMounted(() => {
   cursor: pointer;
   font-size: 1rem;
   font-family: 'Krona One', sans-serif;
-  background-color: #1b5eb8;
+  background-color: #6699D4;
   color: white;
   transition: width 0.3s ease;
 }
 
 .year:hover,
 .genres:hover {
-  background-color: #0f3363;
+  background-color: #4673A9;
 }
 
 .genres.wide {
@@ -148,7 +149,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: #0f3363;
+  background-color: #4673A9;
   padding: 5px;
   border-radius: 5px;
   text-align: center;
@@ -167,7 +168,7 @@ onMounted(() => {
   width: 16px;
   height: 16px;
   border: #fff 2px solid;
-  background-color: #1b5eb8;
+  background-color: #4673A9;
   cursor: pointer;
 }
 
@@ -187,7 +188,7 @@ button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #1b5eb8;
+  background-color: #6699D4;
   color: white;
   cursor: pointer;
   font-size: 1rem;
@@ -195,7 +196,7 @@ button {
 }
 
 button:hover {
-  background-color: #0f3363;
+  background-color: #4673A9;
   transition: background-color 0.3s ease;
 }
 
