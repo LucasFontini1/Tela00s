@@ -58,13 +58,14 @@ function toggleMenu() {
 <style scoped>
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0rem 2rem;
+    gap: 30%;
 }
 
 nav h1 {
-    width: 10%;
+    width: 15%;
     cursor: pointer;
 }
 
@@ -86,24 +87,24 @@ nav ul li {
 }
 
 nav ul.pages {
-    background-color: #1B5EB8;
+    background-color: #6699D4;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    border: #0F3363 5px solid;
+    border: #4673A9 3px solid;
 }
 
 nav ul.pages li a {
     color: white;
     text-decoration: none;
-    font-family: 'Krona One', sans-serif;
+    font-family: 'Nunito', sans-serif;
     padding: 0.3rem 1rem;
 }
 
 header nav ul.pages li a.paginaAtual {
-    background-color: #0F3363;
+    background-color: #4673A9;
     border-radius: 4px;
 }
 
