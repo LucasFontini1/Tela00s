@@ -116,6 +116,7 @@ onMounted(() => {
   background-color: #6699D4;
   color: white;
   transition: width 0.3s ease;
+  width: 30%;
 }
 
 .year:hover,
