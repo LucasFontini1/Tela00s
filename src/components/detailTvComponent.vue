@@ -27,7 +27,7 @@ onMounted(() => {
         }
         : {}">
         <div class="fundo">
-            <img v-if="tvStore.tvDetails.poster_path"
+            <img class="ae" v-if="tvStore.tvDetails.poster_path"
                 :src="`https://image.tmdb.org/t/p/w500${tvStore.tvDetails.poster_path}`" :alt="tvStore.tvDetails.name">
             <div class="detalhes">
                 <h2>{{ tvStore.tvDetails.name }}</h2>
@@ -45,7 +45,6 @@ onMounted(() => {
                 <div class="trailer">
                     <div class="icn">
                         <span style="margin-right: 0.3rem;" class="mdi mdi-heart"></span>
-                        <span class="mdi mdi-star"></span>
                     </div>
                     <p class="tr">
                         <span class="mdi mdi-play"></span> <span>Trailer</span>
@@ -59,7 +58,13 @@ onMounted(() => {
                         {{ tvStore.tvDetails.overview }}
                     </p>
                 </div>
-
+                <div class="seasons">
+                    <ul>
+                        <li v-for="tv in tvStore.tvDetails.seasons">
+                            <img class="imgSeason" :src="`https://image.tmdb.org/t/p/w500${tv.poster_path}`" :alt="tv.name">
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -68,13 +73,13 @@ onMounted(() => {
 .fundo {
     background-color: rgba(70, 115, 169, 0.8);
     display: flex;
-    padding: 1rem 2rem;
-    gap: 2rem;
+    padding: 4rem 8rem;
+    gap: 4rem;
 }
 
 .rating-badge {
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,6 +91,7 @@ onMounted(() => {
     text-transform: uppercase;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+    font-size: 0.8rem;
 }
 
 
@@ -114,14 +120,15 @@ onMounted(() => {
     background-color: #b71c1c;
 }
 
-.fundo img {
-    width: 20%;
+.fundo img.ae {
+    width:20%;
     border-radius: 10px;
 }
 
 .detalhes {
     font-family: 'Actor', sans-serif;
     color: white;
+    width: 80%;
 }
 
 .detalhes h2 {
@@ -149,14 +156,14 @@ div.genres {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 .trailer p{
     background-color: #4673A9;
-    width: 12%;
+    width: 5%;
     text-align: center;
-    border: white solid 1px;
     border-radius: 5px;
     cursor: pointer;
     padding: 5px;
@@ -171,4 +178,33 @@ div.genres {
 .trailer span{
     cursor: pointer;
 }
+div.sinopse{
+    margin-bottom: 1rem;
+}
+div.sinopse h3{
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+}
+
+div.seasons {
+    width: 70vw;
+    padding: 0.5rem 0; 
+}
+
+div.seasons ul {
+    display: flex;
+    overflow: auto;
+    gap: 2rem;
+    
+    & li {
+        list-style: none;
+
+        & img {
+            width: 100px;
+        }
+    }
+}
+
+
+
 </style>

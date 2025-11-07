@@ -109,9 +109,8 @@ onBeforeUnmount(() => {
 
 .series li {
     min-width: 200px;
-    background-color: black;
+    background-color: #4673A9;
     border-radius: 8px;
-    box-shadow: 2px 5px 8px #ffffff50;
     padding: 1rem;
     text-align: center;
 }
@@ -158,11 +157,11 @@ onBeforeUnmount(() => {
 }
 
 .series::-webkit-scrollbar-thumb {
-    background: #0F3363;
+    background: #4673A9;
     border-radius: 4px;
 }
 
 .series::-webkit-scrollbar-thumb:hover {
-    background: #1B5EB8;
+    background: #375b86;
 }
 </style>
