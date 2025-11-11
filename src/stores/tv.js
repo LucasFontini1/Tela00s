@@ -5,6 +5,7 @@ import { useGenreStore } from './genres'
 
 export const useTvStore = defineStore('tv', () => {
   const genreStore = useGenreStore()
+
   const state = reactive({
     tv: [],
     tvWithGenres: [],
@@ -12,6 +13,8 @@ export const useTvStore = defineStore('tv', () => {
     totalPages: 0,
     tvDetails: [],
     contentRating: '',
+    tvCast: [],
+    seasonDetails: [] 
   })
 
   const tv = computed(() => state.tv)
@@ -20,6 +23,8 @@ export const useTvStore = defineStore('tv', () => {
   const currentPage = computed(() => state.currentPage)
   const tvDetails = computed(() => state.tvDetails)
   const contentRating = computed(() => state.contentRating)
+  const tvCast = computed(() => state.tvCast)
+  const seasonDetails = computed(() => state.seasonDetails)
 
   const fetchTv2000s = async () => {
     const response = await api.get(
@@ -42,13 +47,20 @@ export const useTvStore = defineStore('tv', () => {
     state.tvDetails = response.data
 
     const rating = await api.get(`tv/${id}/content_ratings?language=pt-BR`)
-    const brRating = rating.data.results.find((r) => r.iso_3166_1 === 'BR')
+    const brRating = rating.data.results.find(r => r.iso_3166_1 === 'BR')
 
     const rawRating = brRating ? brRating.rating : rating.data.results[0]?.rating || 'N/A'
-
     const formatted = rawRating.replace(/[^\d+]/g, '')
 
     state.contentRating = formatted || rawRating
+
+    const credits = await api.get(`tv/${id}/credits?language=pt-BR`)
+    state.tvCast = credits.data.cast
+  }
+
+  const getSeasonDetails = async (id, seasonNumber) => {
+    const response = await api.get(`tv/${id}/season/${seasonNumber}?language=pt-BR`)
+    state.seasonDetails = response.data
   }
 
   return {
@@ -61,5 +73,8 @@ export const useTvStore = defineStore('tv', () => {
     getTvDetails,
     tvDetails,
     contentRating,
+    tvCast,
+    seasonDetails,
+    getSeasonDetails
   }
 })

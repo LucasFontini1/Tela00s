@@ -34,3 +34,17 @@ h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   line-height: 1.2;
 }
+
+button.voltar{
+  background-color: #4673A9;
+  color: #fff;
+  font-family: 'Actor';
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  transition: 0.3s background ease-in;
+}
+button.voltar:hover{
+  background-color: #385d8a;
+}
