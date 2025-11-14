@@ -16,13 +16,13 @@ const seasonsList = ref(null)
 const isLoading = ref(false)
 
 const goToSeason = (seasonNum) => {
-  router.push({
-    name: 'seasonDetails',
-    params: {
-      id: props.id,            
-      seasonNumber: seasonNum  
-    }
-  })
+    router.push({
+        name: 'seasonDetails',
+        params: {
+            id: props.id,
+            seasonNumber: seasonNum
+        }
+    })
 }
 
 const onWheelScroll = e => {
@@ -48,17 +48,20 @@ onMounted(async () => {
         }
         : {}">
         <div class="fundo">
-            <img class="ae" v-if="tvStore.tvDetails.poster_path" :src="`https://image.tmdb.org/t/p/w500${tvStore.tvDetails.poster_path}`">
+            <img class="ae" v-if="tvStore.tvDetails.poster_path"
+                :src="`https://image.tmdb.org/t/p/w500${tvStore.tvDetails.poster_path}`">
             <div class="detalhes">
                 <h2>{{ tvStore.tvDetails.name }}</h2>
                 <div class="genres">
-                    <p class="genre">{{ tvStore.tvDetails.genres?.map(g => g.name).join(', ') }}</p>
-                    <p v-if="tvStore.contentRating" class="rating-badge" :class="'rating-' + tvStore.contentRating.replace('+', '')">{{ tvStore.contentRating }}</p>
+                    <p class="genre">{{tvStore.tvDetails.genres?.map(g => g.name).join(', ')}}</p>
+                    <p v-if="tvStore.contentRating" class="rating-badge"
+                        :class="'rating-' + tvStore.contentRating.replace('+', '')">{{ tvStore.contentRating }}</p>
                     <p class="note">{{ Math.round(tvStore.tvDetails.vote_average * 10) }}%</p>
                 </div>
                 <div class="trailer">
                     <div class="icn">
-                        <span style="margin-right: 0.3rem; font-size: 2rem; cursor: pointer;" class="mdi mdi-heart"></span>
+                        <span style="margin-right: 0.3rem; font-size: 2rem; cursor: pointer;"
+                            class="mdi mdi-heart"></span>
                     </div>
                     <p class="tr">
                         <span class="mdi mdi-play"></span> <span>Trailer</span>
@@ -84,7 +87,10 @@ onMounted(async () => {
         <h2 class="tittle">Elenco:</h2>
         <ul>
             <li v-for="actor in tvStore.tvCast" :key="actor.id" class="actor">
-                <img :src="actor.profile_path ? `https://image.tmdb.org/t/p/w300${actor.profile_path}` : 'https://via.placeholder.com/300x450?text=Sem+Foto'">
+                <img :src="actor.profile_path
+                    ? `https://image.tmdb.org/t/p/w300${actor.profile_path}`
+                    : '/img/default.jpg'">
+
                 <p>{{ actor.name }}</p>
             </li>
         </ul>
@@ -103,6 +109,7 @@ onMounted(async () => {
     padding: 4rem 8rem;
     gap: 4rem;
 }
+
 .rating-badge {
     width: 1.5rem;
     height: 1.5rem;
@@ -117,32 +124,56 @@ onMounted(async () => {
     font-family: 'Roboto', sans-serif;
     font-size: 0.8rem;
 }
-.rating-L { background-color: #4caf50; }
-.rating-10 { background-color: #2196f3; }
-.rating-12 { background-color: #ffc107; color: #000; }
-.rating-14 { background-color: #ff9800; }
-.rating-16 { background-color: #f44336; }
-.rating-18 { background-color: #b71c1c; }
+
+.rating-L {
+    background-color: #4caf50;
+}
+
+.rating-10 {
+    background-color: #2196f3;
+}
+
+.rating-12 {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.rating-14 {
+    background-color: #ff9800;
+}
+
+.rating-16 {
+    background-color: #f44336;
+}
+
+.rating-18 {
+    background-color: #b71c1c;
+}
+
 .fundo img.ae {
     width: 20%;
     border-radius: 10px;
 }
+
 .detalhes {
     font-family: 'Actor', sans-serif;
     color: white;
     width: 80%;
 }
+
 .detalhes h2 {
     font-size: 3rem;
     font-family: 'Turret Road', sans-serif;
     font-weight: bold;
     margin-bottom: 0;
 }
+
 div.genres {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
+
 .trailer {
     display: flex;
     align-items: center;
@@ -151,6 +182,7 @@ div.genres {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
 .trailer p {
     background-color: #4673A9;
     width: 100px;
@@ -159,20 +191,25 @@ div.genres {
     cursor: pointer;
     padding: 5px;
 }
+
 .trailer p:hover {
     background-color: #2e4d72;
 }
+
 div.sinopse {
     margin-bottom: 1rem;
 }
+
 div.sinopse h3 {
     font-size: 1.6rem;
     margin-bottom: 0.3rem;
 }
+
 div.seasons {
     width: 70vw;
     padding: 0.5rem 0;
 }
+
 div.seasons ul {
     display: flex;
     gap: 1rem;
@@ -182,10 +219,12 @@ div.seasons ul {
     scroll-behavior: smooth;
     padding: 1rem 3rem 0 3rem;
 }
+
 #details .seasons ul {
     mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
+
 #details .seasons ul li {
     list-style: none;
     flex: 0 0 12%;
@@ -193,6 +232,7 @@ div.seasons ul {
     margin-bottom: 1rem;
     cursor: pointer;
 }
+
 #details .seasons ul li::after {
     content: "";
     position: absolute;
@@ -202,15 +242,17 @@ div.seasons ul {
     z-index: 1;
 }
 
-#details .seasons ul li:hover{
+#details .seasons ul li:hover {
     transform: scale(1.05);
-        transition: transform 0.3s ease;
+    transition: transform 0.3s ease;
 }
+
 #details .seasons ul li img {
     width: 100%;
     border-radius: 6px;
     height: 100%;
 }
+
 #details .seasons ul li h2 {
     position: absolute;
     bottom: 10%;
@@ -220,16 +262,19 @@ div.seasons ul {
     white-space: nowrap;
     z-index: 2;
 }
+
 section#elenco {
     padding: 2rem 4rem;
     width: 100%;
     overflow: hidden;
 }
+
 section#elenco h2.tittle {
     color: #4673A9;
     font-family: 'Actor';
     font-size: 4rem;
 }
+
 section#elenco ul {
     list-style: none;
     padding: 0;
@@ -238,14 +283,17 @@ section#elenco ul {
     width: 100%;
     overflow-x: auto;
 }
+
 section#elenco ul li {
     width: 10%;
 }
+
 section#elenco ul li img {
     width: 100%;
     height: auto;
     border-radius: 5px;
 }
+
 section#elenco ul li p {
     font-size: 1.2rem;
     font-family: 'Actor';

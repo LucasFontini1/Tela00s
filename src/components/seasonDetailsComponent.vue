@@ -2,6 +2,7 @@
 import { defineProps, onMounted, ref } from 'vue'
 import { useTvStore } from '@/stores/tv'
 import api from '@/plugins/axios'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
     id: Number,
@@ -9,6 +10,7 @@ const props = defineProps({
 })
 
 const tvStore = useTvStore()
+const router = useRouter()
 
 const openEp = ref(null)
 const guestStars = ref({})
@@ -68,12 +70,15 @@ onMounted(() => {
             </p>
         </div>
     </section>
+        <div class="irParaFundo"  style="display: flex; justify-content: center; margin-top: 2rem;">
+            <button class="voltar"><a style="color: #fff; width: 100%; height: 100%;" href="#fundo">Ir para o final</a></button>
+        </div>
     <section id="ep">
         <ul>
             <li class="eps" v-for="ep in tvStore.seasonDetails.episodes" @click="toggle(ep)">
                 <div class="noClick">
                     <div style="display: flex; gap: 2rem;">
-                        <img :src="`https://image.tmdb.org/t/p/w500${ep.still_path}`" :alt="`${ep.name} poster`">
+                        <img class="oi" :src="`https://image.tmdb.org/t/p/w500${ep.still_path}`" :alt="`${ep.name} poster`">
                         <div class="text">
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <h3>
@@ -125,6 +130,11 @@ onMounted(() => {
             </li>
         </ul>
     </section>
+    <div id="fundo">
+        <button class="voltar" @click="router.back()" style="display: block; margin-left: auto; margin-right: 4rem;">
+            Voltar
+        </button>
+    </div>
 </template>
 <style scoped>
 section#season {
@@ -187,7 +197,7 @@ section#season div.aw p.overview {
 </style>
 <style scoped>
 section#ep {
-    padding: 2rem 6rem;
+    padding: 2rem 4rem;
 }
 
 section#ep ul {
@@ -301,6 +311,9 @@ section#ep ul li div.click div.guests ul.actorList p.name {
 section#ep ul li div.click div.guests ul.actorList p.character {
     color: #666;
     font-size: 0.9rem;
+}
+.oi{
+    width: 20%;
 }
 .ep-enter-from,
 .ep-leave-to {

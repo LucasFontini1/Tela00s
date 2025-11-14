@@ -44,7 +44,11 @@ button.voltar{
   font-size: 1.2rem;
   border-radius: 10px;
   transition: 0.3s background ease-in;
+  cursor: pointer;
 }
 button.voltar:hover{
   background-color: #385d8a;
+}
+html{
+  scroll-behavior: smooth;
 }
