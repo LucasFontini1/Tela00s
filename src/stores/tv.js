@@ -14,7 +14,7 @@ export const useTvStore = defineStore('tv', () => {
     tvDetails: [],
     contentRating: '',
     tvCast: [],
-    seasonDetails: [] 
+    seasonDetails: [],
   })
 
   const tv = computed(() => state.tv)

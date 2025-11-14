@@ -172,7 +172,6 @@ div.sinopse h3 {
 div.seasons {
     width: 70vw;
     padding: 0.5rem 0;
-    overflow: hidden;
 }
 div.seasons ul {
     display: flex;
@@ -181,6 +180,7 @@ div.seasons ul {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
+    padding: 1rem 3rem 0 3rem;
 }
 #details .seasons ul {
     mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
@@ -188,7 +188,7 @@ div.seasons ul {
 }
 #details .seasons ul li {
     list-style: none;
-    flex: 0 0 11.3%;
+    flex: 0 0 12%;
     position: relative;
     margin-bottom: 1rem;
     cursor: pointer;
@@ -200,6 +200,11 @@ div.seasons ul {
     background: rgba(0, 0, 0, 0.45);
     border-radius: 6px;
     z-index: 1;
+}
+
+#details .seasons ul li:hover{
+    transform: scale(1.05);
+        transition: transform 0.3s ease;
 }
 #details .seasons ul li img {
     width: 100%;
