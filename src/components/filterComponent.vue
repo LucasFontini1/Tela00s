@@ -1,209 +1,209 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useGenreStore } from '@/stores/genres'
 import { useTvStore } from '@/stores/tv'
+import { useGenreStore } from '@/stores/genres'
+import { ref, onMounted } from 'vue'
 
-const genreStore = useGenreStore()
 const tvStore = useTvStore()
+const genreStore = useGenreStore()
 
 const isOpen = ref(false)
-const openYears = ref(false)
-const openGenres = ref(false)
+const yearOpen = ref(false)
+const genreOpen = ref(false)
 
-function toggleFilter() {
-  isOpen.value = !isOpen.value
-  if (!isOpen.value) {
-    openYears.value = false
-    openGenres.value = false
-  }
-}
-function toggleYears() {
-  openYears.value = !openYears.value
-  openGenres.value = false
-}
-function toggleGenres() {
-  openGenres.value = !openGenres.value
-  openYears.value = false
-}
-onMounted(() => {
-  genreStore.fetchGenres('tv');
-});
+onMounted(async () => {
+  await genreStore.fetchGenres('tv')
+})
 </script>
 
 <template>
-  <section class="filter" :class="{ open: isOpen }">
-    <div class="alwais-open" @click="toggleFilter">
-      <span class="mdi menu" :class="isOpen ? 'mdi-menu-close' : 'mdi-menu'"></span>
-      <h2>Filtrar</h2>
-    </div>
-
-    <transition name="fade-slide">
-      <div v-if="isOpen" class="year-genres">
-        <button v-if="!openGenres" @click="toggleYears()" class="year">ANOS</button>
-        <button @click="toggleGenres()" class="genres" :class="{ wide: isOpen }">GÊNEROS</button>
+  <section class="filtro">
+    <div class="filter">
+      <div class="alwais-open">
+        <h2 @click="isOpen = !isOpen">
+          <span class="mdi mdi-menu"></span><span>Filtrar</span>
+        </h2>
       </div>
-    </transition>
 
-    <div class="genresList" v-if="openGenres">
-      <ul>
-        <li v-for="genres in genreStore.genres" :key="genres.id">
-          <input type="checkbox" :id="`genre-${genres.id}`" :checked="genreStore.genresSelected.includes(genres.id)" @change="genreStore.toggleGenreSelection(genres.id)" />
-          <label :for="`genre-${genres.id}`">{{ genres.name }}</label>
-        </li>
-      </ul>
-      <button @click="tvStore.fetchTvWithGenres()">Filtrar</button>
-      <button @click="toggleGenres()">Fechar</button>
+      <div class="year-genre" v-if="isOpen">
+
+        <div class="year">
+          <h3 @click="yearOpen = !yearOpen">
+            <span class="ball" v-if="!yearOpen"></span>
+            <span class="ballTwo" v-if="yearOpen"><span class="selected"></span></span>
+            <span>Anos</span>
+          </h3>
+
+          <div class="yearOpened" v-if="yearOpen">
+            <ul>
+              <li v-for="year in [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009]" :key="year">
+                <input
+                  type="checkbox"
+                  :id="'year' + year"
+                  :value="year"
+                  :checked="tvStore.yearsSelected.includes(year)"
+                  @change="tvStore.toggleYearSelection(year)"
+                />
+                <label :for="'year' + year">{{ year }}</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="genre">
+          <h3 @click="genreOpen = !genreOpen">
+            <span class="ball" v-if="!genreOpen"></span>
+            <span class="ballTwo" v-if="genreOpen"><span class="selected"></span></span>
+            <span>Genêros</span>
+          </h3>
+
+          <div class="genreOpened" v-if="genreOpen">
+            <ul>
+              <li v-for="genre in genreStore.genres" :key="genre.id">
+                <input
+                  type="checkbox"
+                  :id="'genre' + genre.id"
+                  :value="genre.id"
+                  :checked="genreStore.genresSelected.includes(genre.id)"
+                  @change="genreStore.toggleGenreSelection(genre.id)"
+                />
+                <label :for="'genre' + genre.id">{{ genre.name }}</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="filtrar">
+          <h3 @click="tvStore.fetchTvWithGenres()">
+            Filtrar
+          </h3>
+        </div>
+
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-.filter {
-  background-color: #6699D4;
-  margin-left: 7rem;
-  text-align: center;
+.filtro {
+  margin-top: 2rem;
+  width: 12%;
+  margin-left: 4rem;
+  background-color: #4673A9;
   color: white;
-  margin-top: 4rem;
-  border-radius: 10px;
-  width: 10%;
-  transition: width 0.5s ease;
-  overflow: hidden;
+  border-radius: 5px;
+  font-family: sans-serif;
+  border: #fff solid 2px;
 }
 
-.filter.open {
-  width: 40%;
-}
-
-.alwais-open {
+.filter h2 {
+  font-size: 1.3rem;
   display: flex;
   align-items: center;
-  gap: 10px;
-  cursor: pointer;
   justify-content: center;
-  margin: 0 auto;
   width: 100%;
-}
-
-.alwais-open:hover {
-  background-color: #4673A9;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
-}
-.filter.open .alwais-open {
-  width: 30%;
-  margin-top: 5px;
-}
-
-.menu {
-  font-size: 2rem;
-}
-
-.year-genres {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.year,
-.genres {
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
-  font-family: 'Krona One', sans-serif;
-  background-color: #6699D4;
-  color: white;
-  transition: width 0.3s ease;
-  width: 30%;
+  height: 3rem;
 }
 
-.year:hover,
-.genres:hover {
+.filter h2 span.mdi {
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.year-genre {
+  padding: 1rem;
+}
+
+.ball,
+.ballTwo {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.5rem;
+  background-color: #fff;
+  position: relative;
+}
+
+.selected {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
   background-color: #4673A9;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  transition: all 0.2s;
 }
 
-.genres.wide {
-  width: 30%;
+.yearOpened,
+.genreOpened {
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+  transition: max-height 0.3s ease;
 }
 
-.genresList {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.genresList ul {
-  list-style: none;
+.yearOpened ul,
+.genreOpened ul {
   padding: 0;
-  overflow-wrap: break-word;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  margin: 0;
+  list-style: none;
 }
 
-.genresList li {
-  margin-bottom: 10px;
-  font-size: 1rem;
-  width: 30%;
+.yearOpened li,
+.genreOpened li {
+  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 10px;
-  background-color: #4673A9;
+}
+
+.yearOpened input[type="checkbox"],
+.genreOpened input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.yearOpened label,
+.genreOpened label {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.yearOpened::-webkit-scrollbar,
+.genreOpened::-webkit-scrollbar {
+  width: 8px;
+}
+
+.yearOpened::-webkit-scrollbar-track,
+.genreOpened::-webkit-scrollbar-track {
+  background: #4673A9;
+}
+
+.yearOpened::-webkit-scrollbar-thumb,
+.genreOpened::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 4px;
+}
+
+.yearOpened::-webkit-scrollbar-thumb:hover,
+.genreOpened::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+}
+
+.filtrar {
+  margin-top: 0.5rem;
+  border-radius: 5px;
   padding: 5px;
-  border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
 }
 
-.genresList li label {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.genresList input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  border: #fff 2px solid;
-  background-color: #4673A9;
-  cursor: pointer;
-}
-
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: all 0.4s ease;
-}
-
-.fade-slide-enter-from,
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(-15px);
-}
-
-button {
-  margin: 10px 0;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
+.filtrar:hover {
   background-color: #6699D4;
-  color: white;
   cursor: pointer;
-  font-size: 1rem;
-  font-family: 'Krona One', sans-serif;
 }
-
-button:hover {
-  background-color: #4673A9;
-  transition: background-color 0.3s ease;
-}
-
-label {
-  width: 100%;
-  text-align: left;
+.genre h3,
+.year h3 {
+  display: flex;
+  align-items: center;
   cursor: pointer;
 }
 </style>
