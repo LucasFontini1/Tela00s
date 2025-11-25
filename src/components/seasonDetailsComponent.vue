@@ -82,7 +82,7 @@ onMounted(() => {
                         <div class="text">
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <h3>
-                                    <span>{{ ep.episode_number }}</span>.{{ ep.name }}
+                                    <span>{{ ep.episode_number }}</span>. {{ ep.name }}
                                 </h3>
                                 <p class="vot">
                                     {{ Math.round(ep.vote_average * 10) }}%
