@@ -1,8 +1,16 @@
 <script setup>
-
+    import headerComponent from '../components/headerComponent.vue';
+    import searchComponent from '@/components/searchComponent.vue';
+    import bestSeriesComponent from '@/components/bestSeriesComponent.vue';
+    import footerComponent from '@/components/footerComponent.vue';
+    import welcomeComponent from '@/components/welcomeComponent.vue';
 </script>
 <template>
-    <h1>oi</h1>
+    <headerComponent />
+    <searchComponent />
+    <welcomeComponent />
+    <bestSeriesComponent />
+    <footerComponent />
 </template>
 <style scoped>
 
