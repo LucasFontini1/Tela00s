@@ -43,9 +43,6 @@ function toggleMenu() {
                 <span class="mdi mdi-heart"></span><span class="none">Curtidos</span>
             </li>
             <li>
-                <span class="mdi mdi-star"></span><span class="none">Favoritos</span>
-            </li>
-            <li>
                 <span class="mdi mdi-cog"></span><span class="none">Configurações</span>
             </li>
             <li  @click="toggleMenu()">
@@ -118,13 +115,13 @@ header nav ul.pages li a.paginaAtual {
 
 ul.icons li span {
     font-size: 2rem;
-    color: #1B5EB8;
+    color: #6699D4;
 }
 .menuOpened {
     position: absolute;
     right: 0rem;
-    top: 10rem;
-    background-color: #1B5EB8;
+    top: 15rem;
+    background-color: #6699D4;
     color: white;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -164,7 +161,7 @@ ul.icons li span {
     font-size: 1.5rem;
 }
 .menuOpened ul li:hover {
-    background-color: #0F3363;
+    background-color: #4673A9;
     border-radius: 4px;
     transition: 0.3s ease-in;
 }
