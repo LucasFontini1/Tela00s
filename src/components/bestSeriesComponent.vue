@@ -158,10 +158,10 @@ onBeforeUnmount(() => {
 
 .series::-webkit-scrollbar-thumb {
     background: #4673A9;
-    border-radius: 4px;
 }
 
 .series::-webkit-scrollbar-thumb:hover {
     background: #375b86;
+    background: #4673A9;
 }
 </style>
