@@ -15,6 +15,7 @@ export const useTvStore = defineStore('tv', () => {
     contentRating: '',
     tvCast: [],
     seasonDetails: [],
+    actor: []
   })
 
   const tv = computed(() => state.tv)
@@ -25,6 +26,7 @@ export const useTvStore = defineStore('tv', () => {
   const contentRating = computed(() => state.contentRating)
   const tvCast = computed(() => state.tvCast)
   const seasonDetails = computed(() => state.seasonDetails)
+  const actor = computed(() => state.actor)
 
   const fetchTv2000s = async () => {
     const response = await api.get(
@@ -62,6 +64,10 @@ export const useTvStore = defineStore('tv', () => {
     const response = await api.get(`tv/${id}/season/${seasonNumber}?language=pt-BR`)
     state.seasonDetails = response.data
   }
+    const getActorDetails = async (id) => {
+    const response = await api.get(`person/${id}?language=pt-BR`)
+    state.actor = response.data
+  }
 
   return {
     tv,
@@ -75,6 +81,8 @@ export const useTvStore = defineStore('tv', () => {
     contentRating,
     tvCast,
     seasonDetails,
-    getSeasonDetails
+    getSeasonDetails,
+    getActorDetails,
+    actor
   }
 })
