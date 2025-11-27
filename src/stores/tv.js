@@ -33,63 +33,41 @@ export const useTvStore = defineStore('tv', () => {
   const actorCredits = computed(() => state.actorCredits)
 
   const fetchTv2000s = async () => {
-    const response = await api.get(
-      'discover/tv?language=pt-BR&sort_by=popularity.desc&first_air_date.gte=2000-01-01&first_air_date.lte=2009-12-31',
-    )
+    const response = await api.get('discover/tv?language=pt-BR&sort_by=popularity.desc&first_air_date.gte=2000-01-01&first_air_date.lte=2009-12-31')
     state.tv = response.data.results
+  }
+
+  const search2000s = async (query) => {
+    const response = await api.get(`search/tv?query=${query}&language=pt-BR`)
+    const filtered = response.data.results.filter(tv => {
+      if (!tv.first_air_date) return false
+      const year = Number(tv.first_air_date.slice(0, 4))
+      return year >= 2000 && year <= 2009
+    })
+    return filtered
   }
 
   const toggleYearSelection = (year) => {
     const index = state.yearsSelected.indexOf(year)
-    if (index > -1) {
-      state.yearsSelected.splice(index, 1)
-    } else {
-      state.yearsSelected.push(year)
-    }
-  }
-
-  const getYearRange = () => {
-    if (state.yearsSelected.length === 0) {
-      // padrão
-      return {
-        gte: '2000-01-01',
-        lte: '2009-12-31',
-      }
-    }
-    const minYear = Math.min(...state.yearsSelected)
-    const maxYear = Math.max(...state.yearsSelected)
-
-    return {
-      gte: `${minYear}-01-01`,
-      lte: `${maxYear}-12-31`,
-    }
+    if (index > -1) state.yearsSelected.splice(index, 1)
+    else state.yearsSelected.push(year)
   }
 
   const fetchTvWithGenres = async (page = 1) => {
     const selectedYears = state.yearsSelected
-
     let results = []
 
     if (selectedYears.length === 0) {
-      const response = await api.get(
-        `discover/tv?language=pt-BR&sort_by=popularity.desc&first_air_date.gte=2000-01-01&first_air_date.lte=2009-12-31&with_genres=${genreStore.genresSelected.join(',')}&page=${page}`,
-      )
+      const response = await api.get(`discover/tv?language=pt-BR&sort_by=popularity.desc&first_air_date.gte=2000-01-01&first_air_date.lte=2009-12-31&with_genres=${genreStore.genresSelected.join(',')}&page=${page}`)
       results = response.data.results
       state.currentPage = response.data.page
       state.totalPages = response.data.total_pages
     } else {
       for (const year of selectedYears) {
-        const response = await api.get(
-          `discover/tv?language=pt-BR&sort_by=popularity.desc&first_air_date_year=${year}&with_genres=${genreStore.genresSelected.join(',')}&page=1`,
-        )
-
+        const response = await api.get(`discover/tv?language=pt-BR&sort_by=popularity.desc&first_air_date_year=${year}&with_genres=${genreStore.genresSelected.join(',')}&page=1`)
         results.push(...response.data.results)
       }
-
-      results = Array.from(new Set(results.map((s) => s.id))).map((id) =>
-        results.find((s) => s.id === id),
-      )
-
+      results = Array.from(new Set(results.map(s => s.id))).map(id => results.find(s => s.id === id))
       state.currentPage = 1
       state.totalPages = 1
     }
@@ -103,22 +81,18 @@ export const useTvStore = defineStore('tv', () => {
     state.tvDetails = response.data
 
     const rating = await api.get(`tv/${id}/content_ratings?language=pt-BR`)
-    const brRating = rating.data.results.find(r => r.iso_3166_1 === 'BR')
-
-    const rawRating = brRating ? brRating.rating : rating.data.results[0]?.rating || 'N/A'
-    const formatted = rawRating.replace(/[^\d+]/g, '')
-
-    state.contentRating = formatted || rawRating
+    const br = rating.data.results.find(r => r.iso_3166_1 === 'BR')
+    const raw = br ? br.rating : rating.data.results[0]?.rating || 'N/A'
+    state.contentRating = raw.replace(/[^\d+]/g, '') || raw
 
     const credits = await api.get(`tv/${id}/credits?language=pt-BR`)
     state.tvCast = credits.data.cast
   }
 
-  const getSeasonDetails = async (id, seasonNumber) => {
-    const response = await api.get(`tv/${id}/season/${seasonNumber}?language=pt-BR`)
+  const getSeasonDetails = async (id, season) => {
+    const response = await api.get(`tv/${id}/season/${season}?language=pt-BR`)
     state.seasonDetails = response.data
   }
-
   const getActorDetails = async (id) => {
     const response = await api.get(`person/${id}?language=pt-BR`)
     state.actor = response.data
@@ -147,6 +121,7 @@ export const useTvStore = defineStore('tv', () => {
     yearsSelected,
     toggleYearSelection,
     fetchTv2000s,
+    search2000s,
     getTvDetails,
     tvDetails,
     contentRating,

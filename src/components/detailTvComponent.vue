@@ -39,6 +39,30 @@ const onWheelScroll = e => {
     el.scrollLeft += e.deltaY
 }
 
+const goToTrailer = async () => {
+    if (!props.id) return
+    isLoading.value = true
+    try {
+        const response = await tvStore.getTvDetails(props.id)
+        const trailers = tvStore.tvDetails.videos?.results?.filter(
+            v => v.type === 'Trailer' && v.site === 'YouTube'
+        )
+        if (trailers && trailers.length > 0) {
+            const trailerKey = trailers[0].key
+            const url = `https://www.youtube.com/watch?v=${trailerKey}`
+            window.open(url, '_blank')
+        } else {
+            alert('Trailer não encontrado.')
+        }
+    } catch (err) {
+        console.error(err)
+        alert('Erro ao buscar trailer.')
+    } finally {
+        isLoading.value = false
+    }
+}
+
+
 onMounted(async () => {
     isLoading.value = true
     await tvStore.getTvDetails(props.id)
@@ -71,9 +95,10 @@ onMounted(async () => {
                         <span style="margin-right: 0.3rem; font-size: 2rem; cursor: pointer;"
                             class="mdi mdi-heart"></span>
                     </div>
-                    <p class="tr">
+                    <p class="tr" @click="goToTrailer">
                         <span class="mdi mdi-play"></span> <span>Trailer</span>
                     </p>
+
                 </div>
                 <div class="sinopse">
                     <h3>Sinopse:</h3>
