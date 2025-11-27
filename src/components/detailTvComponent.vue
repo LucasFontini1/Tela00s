@@ -24,6 +24,14 @@ const goToSeason = (seasonNum) => {
         }
     })
 }
+const goToActor = (id) => {
+    router.push({
+        name: 'ator',
+        params: {
+            id: id
+        }
+    })
+}
 
 const onWheelScroll = e => {
     const el = seasonsList.value
@@ -86,7 +94,7 @@ onMounted(async () => {
     <section id="elenco">
         <h2 class="tittle">Elenco:</h2>
         <ul>
-            <li v-for="actor in tvStore.tvCast" :key="actor.id" class="actor">
+            <li v-for="actor in tvStore.tvCast" :key="actor.id" class="actor" @click="goToActor(actor.id)">
                 <img :src="actor.profile_path
                     ? `https://image.tmdb.org/t/p/w300${actor.profile_path}`
                     : '/img/default.jpg'">
@@ -281,11 +289,15 @@ section#elenco ul {
     display: flex;
     gap: 1rem;
     width: 100%;
-    overflow-x: auto;
 }
 
 section#elenco ul li {
     width: 10%;
+}
+section#elenco ul li:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 section#elenco ul li img {
