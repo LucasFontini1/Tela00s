@@ -4,8 +4,7 @@ import home from '../views/homeView.vue'
 import tv from '../views/tvView.vue'
 import tvDetailsView from '@/views/tvDetailsView.vue'
 import seasonDetailView from '@/views/seasonDetailView.vue'
-import actorView from '@/views/actorView.vue'
-import ActorComponent from '@/components/actorComponent.vue'
+import ActorView from '@/views/actorView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,7 +34,7 @@ const router = createRouter({
     {
       path: '/ator/:id',
       name: 'ator',
-      component: ActorComponent,
+      component: ActorView,
       props: true
     },
   ],

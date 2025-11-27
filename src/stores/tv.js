@@ -15,7 +15,8 @@ export const useTvStore = defineStore('tv', () => {
     contentRating: '',
     tvCast: [],
     seasonDetails: [],
-    actor: []
+    actor: [],
+    actorCredits: []
   })
 
   const tv = computed(() => state.tv)
@@ -27,6 +28,7 @@ export const useTvStore = defineStore('tv', () => {
   const tvCast = computed(() => state.tvCast)
   const seasonDetails = computed(() => state.seasonDetails)
   const actor = computed(() => state.actor)
+  const actorCredits = computed(() => state.actorCredits)
 
   const fetchTv2000s = async () => {
     const response = await api.get(
@@ -64,9 +66,24 @@ export const useTvStore = defineStore('tv', () => {
     const response = await api.get(`tv/${id}/season/${seasonNumber}?language=pt-BR`)
     state.seasonDetails = response.data
   }
-    const getActorDetails = async (id) => {
+
+  const getActorDetails = async (id) => {
     const response = await api.get(`person/${id}?language=pt-BR`)
     state.actor = response.data
+  }
+
+  const getActorCredits = async (id) => {
+    const response = await api.get(`person/${id}/tv_credits?language=pt-BR`)
+
+    const filtered = response.data.cast.filter(item => {
+      if (!item.first_air_date) return false
+      const year = parseInt(item.first_air_date.substring(0, 4))
+      return year >= 2000 && year <= 2009
+    })
+
+    filtered.sort((a, b) => b.popularity - a.popularity)
+
+    state.actorCredits = filtered
   }
 
   return {
@@ -83,6 +100,8 @@ export const useTvStore = defineStore('tv', () => {
     seasonDetails,
     getSeasonDetails,
     getActorDetails,
-    actor
+    actor,
+    actorCredits,
+    getActorCredits
   }
 })
