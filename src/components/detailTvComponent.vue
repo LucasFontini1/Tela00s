@@ -289,11 +289,15 @@ section#elenco ul {
     display: flex;
     gap: 1rem;
     width: 100%;
-    overflow-x: auto;
 }
 
 section#elenco ul li {
     width: 10%;
+}
+section#elenco ul li:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 section#elenco ul li img {

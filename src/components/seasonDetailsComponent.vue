@@ -43,6 +43,14 @@ function formatDate(dateStr) {
         year: "numeric"
     }).replace(/(^\d+ de )([a-z])/, (_, dia, mes) => dia + mes.toUpperCase());
 }
+const goToActor = (id) => {
+    router.push({
+        name: 'ator',
+        params: {
+            id: id
+        }
+    })
+}
 
 onMounted(() => {
     tvStore.getSeasonDetails(props.id, props.seasonNumber)
@@ -113,7 +121,7 @@ onMounted(() => {
                             <h4>Artistas convidados <span>{{ guestStars[ep.episode_number]?.length || 0 }}</span></h4>
 
                             <ul class="actorList">
-                                <li v-for="actor in guestStars[ep.episode_number]" :key="actor.credit_id">
+                                <li v-for="actor in guestStars[ep.episode_number]" :key="actor.credit_id" @click="goToActor(actor.id)">
                                     <img :src="actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : '/no-img.png'"
                                         alt="">
 
@@ -295,6 +303,12 @@ section#ep ul li div.click div.guests ul.actorList li {
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: pointer;
+}
+section#ep ul li div.click div.guests ul.actorList li:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 section#ep ul li div.click div.guests ul.actorList li img {
