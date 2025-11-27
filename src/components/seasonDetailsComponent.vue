@@ -17,6 +17,11 @@ const router = useRouter()
 const openEp = ref(null)
 const guestStars = ref({})
 
+function goToEnd() {
+    const el = document.getElementById("fundo")
+    if (el) el.scrollIntoView({ behavior: "smooth" })
+}
+
 async function toggle(ep) {
     if (openEp.value === ep.episode_number) {
         openEp.value = null
@@ -36,15 +41,14 @@ async function toggle(ep) {
 
 function formatDate(dateStr) {
     if (!dateStr) return ""
-
     const date = new Date(dateStr)
-
     return date.toLocaleDateString("pt-BR", {
         day: "2-digit",
         month: "long",
         year: "numeric"
-    }).replace(/(^\d+ de )([a-z])/, (_, dia, mes) => dia + mes.toUpperCase());
+    }).replace(/(^\d+ de )([a-z])/, (_, dia, mes) => dia + mes.toUpperCase())
 }
+
 const goToActor = (id) => {
     router.push({
         name: 'ator',
@@ -59,7 +63,6 @@ onMounted(async () => {
     await tvStore.getSeasonDetails(props.id, props.seasonNumber)
     isLoading.value = false
 })
-
 </script>
 
 <template>
@@ -83,9 +86,11 @@ onMounted(async () => {
             </p>
         </div>
     </section>
-        <div class="irParaFundo"  style="display: flex; justify-content: center; margin-top: 2rem;">
-            <button class="voltar"><a style="color: #fff; width: 100%; height: 100%;" href="#fundo">Ir para o final</a></button>
-        </div>
+
+    <div class="irParaFundo" style="display: flex; justify-content: center; margin-top: 2rem;">
+        <button class="voltar" @click="goToEnd">Ir para o final</button>
+    </div>
+
     <section id="ep">
         <ul>
             <li class="eps" v-for="ep in tvStore.seasonDetails.episodes" @click="toggle(ep)">
@@ -111,6 +116,7 @@ onMounted(async () => {
                     </div>
                     <span class="mdi mdi-chevron-down span" :class="{ open: openEp === ep.episode_number }"></span>
                 </div>
+
                 <transition name="ep">
                     <div class="click" v-if="openEp === ep.episode_number">
                         <div class="crew">
@@ -127,9 +133,7 @@ onMounted(async () => {
 
                             <ul class="actorList">
                                 <li v-for="actor in guestStars[ep.episode_number]" :key="actor.credit_id" @click="goToActor(actor.id)">
-                                    <img :src="actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : '/no-img.png'"
-                                        alt="">
-
+                                    <img :src="actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : '/no-img.png'" alt="">
                                     <div>
                                         <p class="name">{{ actor.name }}</p>
                                         <p class="character">{{ actor.character }}</p>
@@ -138,11 +142,11 @@ onMounted(async () => {
                             </ul>
                         </div>
                     </div>
-
                 </transition>
             </li>
         </ul>
     </section>
+
     <div id="fundo">
         <button class="voltar" @click="router.back()" style="display: block; margin-left: auto; margin-right: 4rem;">
             Voltar
@@ -150,6 +154,7 @@ onMounted(async () => {
         <Loading v-model:active="isLoading" is-full-page />
     </div>
 </template>
+
 <style scoped>
 section#season {
     background-color: #6699D4;
@@ -209,6 +214,7 @@ section#season div.aw p.overview {
     font-size: 1.1rem;
 }
 </style>
+
 <style scoped>
 section#ep {
     padding: 2rem 4rem;
@@ -222,7 +228,6 @@ section#ep ul {
 section#ep ul li.eps {
     margin-bottom: 2rem;
     padding: 2rem;
-    /* border: #97A6BC solid 1px; */
     border-radius: 5px;
     box-shadow: 0 0 10px 2px #97A6BC;
 }
@@ -265,7 +270,6 @@ section#ep ul li span.span {
 section#ep ul li span.span.open {
     transform: rotate(180deg);
 }
-
 
 section#ep ul li div.click {
     padding-top: 2rem;
@@ -311,6 +315,7 @@ section#ep ul li div.click div.guests ul.actorList li {
     gap: 1rem;
     cursor: pointer;
 }
+
 section#ep ul li div.click div.guests ul.actorList li:hover {
     transform: scale(1.02);
     transition: transform 0.3s ease;
@@ -332,9 +337,11 @@ section#ep ul li div.click div.guests ul.actorList p.character {
     color: #666;
     font-size: 0.9rem;
 }
-.oi{
+
+.oi {
     width: 20%;
 }
+
 .ep-enter-from,
 .ep-leave-to {
     opacity: 0;

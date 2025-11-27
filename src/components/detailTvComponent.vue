@@ -11,9 +11,13 @@ const props = defineProps({
     }
 })
 
+
+
 const tvStore = useTvStore()
 const seasonsList = ref(null)
 const isLoading = ref(false)
+const isLiked = ref(false)
+
 
 const goToSeason = (seasonNum) => {
     router.push({
@@ -93,7 +97,7 @@ onMounted(async () => {
                 <div class="trailer">
                     <div class="icn">
                         <span style="margin-right: 0.3rem; font-size: 2rem; cursor: pointer;"
-                            class="mdi mdi-heart"></span>
+                            class="mdi mdi-heart" @click="isLiked = !isLiked" :class="{ liked: isLiked }"></span>
                     </div>
                     <p class="tr" @click="goToTrailer">
                         <span class="mdi mdi-play"></span> <span>Trailer</span>
@@ -363,4 +367,8 @@ section#elenco ul li p {
     background: #2e4d72;
     transition: 0.3s ease;
 }
+.liked {
+    color: red;
+}
+
 </style>
