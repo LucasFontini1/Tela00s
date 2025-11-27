@@ -1,14 +1,14 @@
 <script setup>
-import { defineProps, onMounted } from 'vue';
+import { defineProps, onMounted, watch, ref } from 'vue';
 import { useTvStore } from '@/stores/tv';
 import router from '@/router';
+import Loading from 'vue-loading-overlay'
 
 const props = defineProps({
-    id: {
-        type: Number
-    }
+    id: Number
 })
 
+const isLoading = ref(false)
 const tvStore = useTvStore()
 
 const getGenderLabel = (g) => {
@@ -26,12 +26,31 @@ const goToShow = (showId) => {
     })
 }
 
+const goToActor = (actorId) => {
+    router.push({
+        name: 'ator',
+        params: { id: actorId }
+    })
+}
 
 onMounted(async () => {
+    isLoading.value = true
     await tvStore.getActorDetails(props.id)
     await tvStore.getActorCredits(props.id)
+    await tvStore.getRelatedActors(props.id)
+    isLoading.value = false
+})
+
+watch(() => props.id, async (newId) => {
+    isLoading.value = true
+    await tvStore.getActorDetails(newId)
+    await tvStore.getActorCredits(newId)
+    await tvStore.getRelatedActors(newId)
+    isLoading.value = false
 })
 </script>
+
+
 <template>
    <section id="actor">
     <div class="img">
@@ -41,16 +60,14 @@ onMounted(async () => {
         <ul></ul>
     </div>
     <div class="actorInfo">
-        <h2>
-            {{ tvStore.actor.name }}
-        </h2>
-        <p class="bio">
-            {{ tvStore.actor.biography }}
-        </p>
+        <h2>{{ tvStore.actor.name }}</h2>
+        <p class="bio" v-if="tvStore.actor.biography">{{ tvStore.actor.biography }}</p>
+        <p class="bio" v-else>Biografia não disponível.</p>
         <div class="separator"></div>
         <p>Conhecido por: {{ tvStore.actor.known_for_department }}</p>
     </div>
    </section>
+
    <section id="actorDetail">
     <div class="left">
         <div class="personalInfo">
@@ -69,38 +86,48 @@ onMounted(async () => {
                     <p>{{ tvStore.actor.place_of_birth }}</p>
                 </li>
             </ul>
+
             <h3>Atores Relacionados</h3>
-            <ul>
-                <li></li>
+            <ul class="relatedList">
+                <li 
+                  v-for="a in tvStore.relatedActors" 
+                  :key="a.realId"
+                  class="relatedCard"
+                  @click="goToActor(a.realId)"
+                >
+                  <p>{{ a.name }}</p>
+                </li>
             </ul>
         </div> 
     </div>
+
     <div class="right">
-            <h2>Participou em:</h2>
-           
-    <div class="grid">
-        <div 
-            v-for="item in tvStore.actorCredits" 
-            :key="item.id" 
-            class="card"
-            @click="goToShow(item.id)" 
-        >
-            <img 
-                :src="item.poster_path 
-                    ? `https://image.tmdb.org/t/p/w300${item.poster_path}`
-                    : '/img/default.jpg'"
+        <h2>Participou em:</h2>
+        <div class="grid">
+            <div 
+                v-for="item in tvStore.actorCredits" 
+                :key="item.id" 
+                class="card"
+                @click="goToShow(item.id)"
             >
-            <h4>{{ item.name }}</h4>
+                <img 
+                    :src="item.poster_path 
+                        ? `https://image.tmdb.org/t/p/w300${item.poster_path}`
+                        : '/img/default.jpg'"
+                >
+                <h4>{{ item.name }}</h4>
+            </div>
         </div>
     </div>
-    </div>
    </section>
+
     <button class="voltar" @click="router.back()" style="display: block; margin-left: auto; margin-right: 4rem;">
         Voltar
     </button>
+    <Loading v-model:active="isLoading" is-full-page />
 </template>
-<style scoped>
 
+<style scoped>
 section{
     margin-left: 4vw;
     margin-right: 4vw;
@@ -164,6 +191,24 @@ h3{
 .personalInfo li p{
     margin-top: 0.5vw;
 }
+
+.relatedList {
+    padding: 0;
+    text-align: left;
+}
+
+.relatedCard {
+    cursor: pointer;
+}
+
+.relatedCard p{
+    color: #3A8FD7;
+}
+
+.relatedCard p:hover {
+    text-decoration: underline;
+}
+
 .grid {
     width: 100%;
     display: grid;
@@ -202,5 +247,4 @@ h3{
     font-size: 0.9vw;
     opacity: 0.8;
 }
-
 </style>

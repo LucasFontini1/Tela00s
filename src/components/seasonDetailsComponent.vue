@@ -3,12 +3,14 @@ import { defineProps, onMounted, ref } from 'vue'
 import { useTvStore } from '@/stores/tv'
 import api from '@/plugins/axios'
 import { useRouter } from 'vue-router'
+import Loading from 'vue-loading-overlay'
 
 const props = defineProps({
     id: Number,
     seasonNumber: Number
 })
 
+const isLoading = ref(false)
 const tvStore = useTvStore()
 const router = useRouter()
 
@@ -52,9 +54,12 @@ const goToActor = (id) => {
     })
 }
 
-onMounted(() => {
-    tvStore.getSeasonDetails(props.id, props.seasonNumber)
+onMounted(async () => {
+    isLoading.value = true
+    await tvStore.getSeasonDetails(props.id, props.seasonNumber)
+    isLoading.value = false
 })
+
 </script>
 
 <template>
@@ -142,6 +147,7 @@ onMounted(() => {
         <button class="voltar" @click="router.back()" style="display: block; margin-left: auto; margin-right: 4rem;">
             Voltar
         </button>
+        <Loading v-model:active="isLoading" is-full-page />
     </div>
 </template>
 <style scoped>

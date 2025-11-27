@@ -314,6 +314,7 @@ section#elenco ul {
     display: flex;
     gap: 1rem;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 section#elenco ul li {

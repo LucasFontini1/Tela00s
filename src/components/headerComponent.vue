@@ -152,6 +152,7 @@ nav ul.pages li a {
 ul.icons li span {
     font-size: 2rem;
     color: #6699D4;
+    cursor: pointer;
 }
 
 .searchBar {
@@ -179,6 +180,9 @@ ul.icons li span {
     outline: none;
     border: none;
     color: white;
+}
+.searchBox input::placeholder {
+    color: #fff;
 }
 .searchResults {
     position: absolute;
