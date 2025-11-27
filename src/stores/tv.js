@@ -15,7 +15,9 @@ export const useTvStore = defineStore('tv', () => {
     tvDetails: [],
     contentRating: '',
     tvCast: [],
-    seasonDetails: []
+    seasonDetails: [],
+    actor: [],
+    actorCredits: []
   })
 
   const tv = computed(() => state.tv)
@@ -27,6 +29,8 @@ export const useTvStore = defineStore('tv', () => {
   const contentRating = computed(() => state.contentRating)
   const tvCast = computed(() => state.tvCast)
   const seasonDetails = computed(() => state.seasonDetails)
+  const actor = computed(() => state.actor)
+  const actorCredits = computed(() => state.actorCredits)
 
   const fetchTv2000s = async () => {
     const response = await api.get('discover/tv?language=pt-BR&sort_by=popularity.desc&first_air_date.gte=2000-01-01&first_air_date.lte=2009-12-31')
@@ -89,11 +93,23 @@ export const useTvStore = defineStore('tv', () => {
     const response = await api.get(`tv/${id}/season/${season}?language=pt-BR`)
     state.seasonDetails = response.data
   }
+  const getActorDetails = async (id) => {
+    const response = await api.get(`person/${id}?language=pt-BR`)
+    state.actor = response.data
+  }
 
-  const getTvTrailer = async (id) => {
-    const response = await api.get(`tv/${id}/videos?language=pt-BR`)
-    const trailer = response.data.results.find(v => v.type === 'Trailer' && v.site === 'YouTube')
-    return trailer ? `https://www.youtube.com/embed/${trailer.key}` : null
+  const getActorCredits = async (id) => {
+    const response = await api.get(`person/${id}/tv_credits?language=pt-BR`)
+
+    const filtered = response.data.cast.filter(item => {
+      if (!item.first_air_date) return false
+      const year = parseInt(item.first_air_date.substring(0, 4))
+      return year >= 2000 && year <= 2009
+    })
+
+    filtered.sort((a, b) => b.popularity - a.popularity)
+
+    state.actorCredits = filtered
   }
 
   return {
@@ -112,6 +128,9 @@ export const useTvStore = defineStore('tv', () => {
     tvCast,
     seasonDetails,
     getSeasonDetails,
-    getTvTrailer
+    getActorDetails,
+    actor,
+    actorCredits,
+    getActorCredits
   }
 })
