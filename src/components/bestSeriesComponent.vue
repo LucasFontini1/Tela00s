@@ -2,11 +2,13 @@
 import { onMounted, ref, onBeforeUnmount } from 'vue';
 import { useTvStore } from '@/stores/tv';
 import Loading from 'vue-loading-overlay';
+import { useRouter } from 'vue-router';
 
 const tvStore = useTvStore();
 const isLoading = ref(false);
 const currentBackdrop = ref();
 const seriesRef = ref(null);
+const router = useRouter();
 
 const handleWheel = (e) => {
     if (seriesRef.value) {
@@ -30,6 +32,11 @@ const setBackdrop = (backdropPath) => {
     currentBackdrop.value = `https://image.tmdb.org/t/p/original${backdropPath}`;
 };
 
+function openTv(id){
+    router.push({name: 'tvDetails', params: { id } })
+}
+
+
 onBeforeUnmount(() => {
     if (seriesRef.value) {
         seriesRef.value.removeEventListener('wheel', handleWheel);
@@ -43,7 +50,7 @@ onBeforeUnmount(() => {
         <div class="fundo">
             <h2>Séries mais procuradas</h2>
             <ul class="series" ref="seriesRef">
-                <li v-for="tv in tvStore.tv" :key="tv.id" @mouseover="setBackdrop(tv.backdrop_path)">
+                <li v-for="tv in tvStore.tv" :key="tv.id" @mouseover="setBackdrop(tv.backdrop_path)" @click="openTv(tv.id)">
                     <img :src="`https://image.tmdb.org/t/p/w500${tv.poster_path}`" :alt="tv.name" />
                     <h3>{{ tv.name }}</h3>
                     <div class="data-nota">
@@ -104,7 +111,6 @@ onBeforeUnmount(() => {
     min-width: 200px;
     background-color: #4673A9;
     border-radius: 8px;
-    /* box-shadow: 2px 5px 8px #ffffff50; */
     padding: 1rem;
     text-align: center;
 }
@@ -151,11 +157,11 @@ onBeforeUnmount(() => {
 }
 
 .series::-webkit-scrollbar-thumb {
-    background: #6699D4;
-    border-radius: 4px;
+    background: #4673A9;
 }
 
 .series::-webkit-scrollbar-thumb:hover {
+    background: #375b86;
     background: #4673A9;
 }
 </style>

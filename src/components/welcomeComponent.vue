@@ -19,7 +19,6 @@
 }
 .welcome img {
     width: 40%;
-    margin-bottom: -8rem;
 }
 .welcome h2 {
     font-family: 'Krona One', sans-serif;

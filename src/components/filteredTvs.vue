@@ -1,6 +1,7 @@
 <script setup>
 import { useTvStore } from '@/stores/tv'
 import { ref } from 'vue'
+import router from '@/router'
 
 const tvStore = useTvStore()
 
@@ -20,13 +21,17 @@ const selectPage = (pageNum) => {
     tvStore.fetchTvWithGenres(pageNum)
 }
 
+function openTv(id){
+    router.push({name: 'tvDetails', params: { id } })
+}
+
 
 </script>
 
 <template>
     <section id="filteredTvs">
         <ul>
-            <li v-for="tv in tvStore.tvWithGenres.results" :key="tv.id" class="tv-card">
+            <li v-for="tv in tvStore.tvWithGenres.results" :key="tv.id" @click="openTv(tv.id)" class="tv-card">
                 <div class="card-container">
                     <img :src="`https://image.tmdb.org/t/p/w500${tv.poster_path}`" :alt="tv.name" />
                     <div class="dark-overlay"></div>

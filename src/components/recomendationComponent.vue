@@ -3,11 +3,15 @@ import { ref, onMounted } from 'vue'
 import { useTvStore } from '@/stores/tv'
 import Loading from 'vue-loading-overlay'
 import api from '@/plugins/axios'
+import router from '@/router'
 
 const isLoading = ref(false)
 const tvStore = useTvStore()
 const serie = ref(null)
 const backGroundImage = ref(null)
+function openTv(id){
+    router.push({name: 'tvDetails', params: { id } })
+}
 
 onMounted(async () => {
   isLoading.value = true
@@ -42,7 +46,7 @@ onMounted(async () => {
     <div class="info">
       <h2>{{ serie.name }}</h2>
       <p>{{ serie.overview }}</p>
-      <button>
+      <button @click="openTv(serie.id)">
         Ver mais
       </button>
     </div>
